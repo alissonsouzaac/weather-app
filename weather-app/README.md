@@ -15,7 +15,7 @@ This is a simple Weather App built with React that allows users to check the cur
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/alissonsouzaac/weather-application.git
+   git clone https://github.com/alissonsouzaac/weather-app
 
    ```
 
@@ -42,14 +42,6 @@ This is a simple Weather App built with React that allows users to check the cur
    ```
 
 2. Open your browser and go to http://localhost:3000.
-
-### Running Tests
-
-1. To run tests:
-
-   ```bash
-   npm test
-   ```
 
 ### Author
 
