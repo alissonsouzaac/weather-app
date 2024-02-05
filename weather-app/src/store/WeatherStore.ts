@@ -1,27 +1,48 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-
-interface Forecast {
-  // Defina as propriedades necessárias para representar as informações meteorológicas
-  temperature: number;
-  windSpeed: number;
-  humidity: number;
-  // ... outras propriedades
-}
+import { action, makeObservable, observable, runInAction, toJS } from "mobx";
+import { WeatherData3 } from '../services/WeatherService';
 
 class WeatherStore {
-  forecasts: Forecast[] = [];
+  forecasts: WeatherData3[] = [];
+  forecast: WeatherData3 | null = null;
 
   constructor() {
-    makeAutoObservable(this);
-  }
-
-  addForecast(forecast: Forecast) {
-    runInAction(() => {
-      this.forecasts.push(forecast);
+    makeObservable(this, {
+      forecasts: observable,
+      forecast: observable,
+      addForecast: action,
+      setForecast: action,
+      getForecastsAsJS: action,
+      getForecasts: action
     });
+
+    // Tenta obter os dados do localStorage
+    const storedForecasts = localStorage.getItem('forecasts');
+    if (storedForecasts) {
+      this.forecasts = JSON.parse(storedForecasts);
+    }
   }
 
-  // Implemente métodos para buscar ou atualizar dados conforme necessário
+  addForecast(forecast: any) {
+    this.forecasts.push(forecast);
+  }
+
+  getForecastsAsJS() {
+    return toJS(this.forecast);
+  }
+
+  getForecasts() {
+    return toJS(this.forecasts);
+  }
+
+  setForecast(weather: any) {
+    console.log(weather);
+  //  runInAction(() => {
+      this.forecast = weather;
+      localStorage.setItem('forecasts', JSON.stringify(toJS(this.forecasts)));
+ //   });
+  }
 }
 
-export const weatherStore = new WeatherStore();
+const weatherStore = new WeatherStore();
+
+export default weatherStore;
