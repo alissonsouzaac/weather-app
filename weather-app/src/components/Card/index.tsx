@@ -1,50 +1,39 @@
-// WeatherCard.tsx
+import React from 'react';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { ForecastIsSunUtils } from '../../utils/ForecastIsSunUtils';
+import { ContainerImg, StyledCard } from './style';
+import { WeatherCardProps } from './types';
 
-import React, { useEffect, useState } from 'react';
-import { WeatherData3 } from '../../services/WeatherService';
-import weatherStore from '../../store/WeatherStore';
-
- interface WeatherCardProps {
-   weatherData?: WeatherData3;
- }
-
-const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
-    //const forecast = weatherStore.getForecastsAsJS();
-    //const [weatherData, setWeatherData] = useState<any>()
-    const [showData, setShowData] = useState<boolean>(false);
-  //  var weatherData = weatherStore.getForecastsAsJS()
-    useEffect(() => {
-        const forecast = weatherStore.getForecastsAsJS()
-        const forecasts = weatherStore.getForecasts()
-        console.log(forecast);
-        console.log(forecasts)
-        console.log('Oiii');
-        console.log(localStorage.getItem('forecasts'));
-      //  setWeatherData(forecast);
-      console.log(weatherData)
-      if (forecast != null && forecast) {
-        console.log('existe weatherData');
-        setShowData(true);
-      }
-    }, [weatherData])
+const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData, onClick }) => {
+  const forecastsImage = ForecastIsSunUtils(weatherData);
 
   return (
-    <div className="weather-card">
-      <h2>Weather Information</h2>
-      {showData && weatherData && (
-        <>
-        <p>Latitude: {weatherData.latitude}</p> 
-        <p>Longitude: {weatherData.longitude}</p>
-        <p>Temperature: {weatherData.current.temperature_2m} °C</p>
-        <p>Relative Humidity: {weatherData.current.relative_humidity_2m}%</p>
-        <p>Is Day: {weatherData.current.is_day ? 'Yes' : 'No'}</p>
-        <p>Rain: {weatherData.current.rain} mm</p>
-        <p>Wind Speed: {weatherData.current.wind_speed_10m} km/h</p>
-       </>
-      )}
-       You can add more information as needed
-    </div>
+    <StyledCard onClick={onClick}>
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          Latitude: {weatherData?.latitude}
+        </Typography>
+        <Typography variant="h6" gutterBottom>
+          Longitude: {weatherData?.longitude}
+        </Typography>
+        {weatherData?.current && (
+          <>
+            <Typography variant="body1">
+              Temperature: {weatherData.current.temperature_2m} °C
+            </Typography>
+            
+          </>
+        )}
+      </CardContent>
+        {weatherData.current.rain !== undefined && (
+          <ContainerImg>
+            <img src={forecastsImage} alt="Weather" style={{ width: '80px', height: '80px' }} />
+          </ContainerImg>
+        )}
+    </StyledCard>
   );
 };
 
 export default WeatherCard;
+

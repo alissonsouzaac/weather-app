@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+
+.sunny-background {
+  background-color: #87ceeb6b;
+}
+
+.rainy-background {
+  background-color: #445f6bb8;
+}
+
+.main {
+  height: 100vh;
+}
+
