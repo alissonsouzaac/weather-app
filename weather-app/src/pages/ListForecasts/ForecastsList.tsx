@@ -19,7 +19,6 @@ const ForecastsList: React.FC = () => {
     const forecastsFromLocalStorage = getFromLocalStorage('forecasts');
 
     if (forecastsFromLocalStorage) {
-      console.log(forecastsFromLocalStorage)
       setWeatherDataList(forecastsFromLocalStorage);
 
       if (forecastsFromLocalStorage.length > 0) {
