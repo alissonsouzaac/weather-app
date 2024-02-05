@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { Card, Typography } from "@mui/material";
-import weatherStore from "../../store/WeatherStore";
+import forecastStore from "../../store/ForecastsStore";
 
-const isSunny = weatherStore.itsSun;
+const isSunny = forecastStore.itsSun;
 
 export const StyledCard = styled(Card)`
   margin-top: 8px;
@@ -14,7 +14,7 @@ export const StyledCard = styled(Card)`
 export const HourlyContainer = styled.div`
   display: flex;
   overflow-x: auto;
-  padding-top: 8px; /* Adicionando espaço superior */
+  padding-top: 8px;
 `;
 
 export const HourlyInfo = styled.div`
@@ -25,7 +25,7 @@ export const HourlyInfo = styled.div`
 `;
 
 export const HourlyTemperature = styled(Typography)`
-    margin-top: 4px; /* Ajustando o espaçamento para o topo */
+    margin-top: 4px;
     margin-right: 8px;
     margin-bottom: 15px;
     font-size: 10px;

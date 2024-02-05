@@ -2,40 +2,40 @@ import React, { useEffect, useState } from 'react';
 import WeatherCard from '../../components/Card';
 import { getFromLocalStorage } from '../../utils/LocalStorageUtils';
 import { updateForecastsInLocalStorage } from '../../services/UpdateWeatherStorage';
-import { Button, ButtonGroup, Typography } from '@mui/material';
+import { ButtonGroup, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import weatherStore from '../../store/WeatherStore';
 import { NoCitiesMessage, SpanNotice, StyledPageContainer, StyledWeatherList } from './style';
 import { ForecastsData } from '../../types/ForecastsData';
-import ForecastsDetails from '../../components/ForecastDetails';
 import { StyledButton } from '../AddForecasts/style';
+import forecastStore from '../../store/ForecastsStore';
+import ForecastsDetails from '../../components/CurrentForecastDetails';
 
 const ForecastsList: React.FC = () => {
-  const [selectedWeather, setSelectedWeather] = useState<ForecastsData | null>(null);
-  const [weatherDataList, setWeatherDataList] = useState<ForecastsData[]>([]);
+  const [selectedForecast, setSelectedForecast] = useState<ForecastsData | null>(null);
+  const [forecastDataList, setForecastDataList] = useState<ForecastsData[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const forecastsFromLocalStorage = getFromLocalStorage('forecasts');
 
     if (forecastsFromLocalStorage) {
-      setWeatherDataList(forecastsFromLocalStorage);
+      setForecastDataList(forecastsFromLocalStorage);
 
       if (forecastsFromLocalStorage.length > 0) {
-        setSelectedWeather(forecastsFromLocalStorage[0]);
+        setSelectedForecast(forecastsFromLocalStorage[0]);
 
-        const firstWeatherData = forecastsFromLocalStorage[0];
-        if (firstWeatherData.current && firstWeatherData.current.rain > 0 && firstWeatherData.current.snowfall > 0 && firstWeatherData.current.showers > 0 ) {
-          weatherStore.setForecastsItsSun(false);
+        const firstForecastData = forecastsFromLocalStorage[0];
+        if (firstForecastData.current && firstForecastData.current.rain > 0 && firstForecastData.current.snowfall > 0 && firstForecastData.current.showers > 0 ) {
+          forecastStore.setForecastsItsSun(false);
         } else {
-          weatherStore.setForecastsItsSun(true);
+          forecastStore.setForecastsItsSun(true);
         }
       }
     }
   }, []);
 
   const handleCardClick = (weatherData: ForecastsData) => {
-    setSelectedWeather(weatherData);
+    setSelectedForecast(weatherData);
   };
 
   const handleUpdate = async () => {
@@ -65,7 +65,7 @@ const ForecastsList: React.FC = () => {
           Limpar todas as cidades
         </StyledButton>
       </ButtonGroup>
-      {weatherDataList.length === 0 ? (
+      {forecastDataList.length === 0 ? (
         <NoCitiesMessage>
           <Typography variant="body1">
             Nenhuma cidade cadastrada.{' '}
@@ -78,15 +78,15 @@ const ForecastsList: React.FC = () => {
       ) : (
         <StyledWeatherList>
           <div>
-            {weatherDataList.map((weatherData, index) => (
+            {forecastDataList.map((forecastData, index) => (
               <WeatherCard
-                key={`${weatherData.latitude}_${weatherData.longitude}_${index}`}
-                weatherData={weatherData}
-                onClick={() => handleCardClick(weatherData)}
+                key={`${forecastData.latitude}_${forecastData.longitude}_${index}`}
+                ForecastData={forecastData}
+                onClick={() => handleCardClick(forecastData)}
               />
             ))}
           </div>
-          {selectedWeather && <ForecastsDetails forecastsData={selectedWeather} />}
+          {selectedForecast && <ForecastsDetails forecastsData={selectedForecast} />}
         </StyledWeatherList>
       )}
     </StyledPageContainer>

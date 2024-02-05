@@ -4,7 +4,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 const StyledCard = styled(Card)`
   margin-top: 8px;
   width: 820px;
-  height: 74vh;
+  height: 81vh;
   margin-right: 6px;
   background-color: #87ceeb6b;
 `;
@@ -22,7 +22,7 @@ const TemperatureWrapper = styled.div`
   justify-content: flex-end;
   width: 100%;
   position: relative;
-  bottom: 75px;
+  bottom: 150px;
 `;
 
 const TemperatureText = styled(Typography)`

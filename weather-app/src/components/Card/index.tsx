@@ -3,37 +3,43 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { ForecastIsSunUtils } from '../../utils/ForecastIsSunUtils';
 import { ContainerImg, StyledCard } from './style';
-import { WeatherCardProps } from './types';
+import { ForecastCardProps } from './types';
 
-const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData, onClick }) => {
-  const forecastsImage = ForecastIsSunUtils(weatherData);
+const ForecastCard: React.FC<ForecastCardProps> = ({ ForecastData, onClick }) => {
+  const forecastsImage = ForecastIsSunUtils(ForecastData);
 
   return (
     <StyledCard onClick={onClick}>
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Latitude: {weatherData?.latitude}
+      <Typography variant="h4">
+          {ForecastData?.cityName}
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+          Latitude: {ForecastData?.latitude}
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Longitude: {weatherData?.longitude}
+          Latitude: {ForecastData?.latitude}
         </Typography>
-        {weatherData?.current && (
+        <Typography variant="h6" gutterBottom>
+          Longitude: {ForecastData?.longitude}
+        </Typography>
+        {ForecastData?.current && (
           <>
             <Typography variant="body1">
-              Temperature: {weatherData.current.temperature_2m} °C
+              Temperature: {ForecastData.current.temperature_2m} °C
             </Typography>
             
           </>
         )}
       </CardContent>
-        {weatherData.current.rain !== undefined && (
+        {ForecastData.current.rain !== undefined && (
           <ContainerImg>
-            <img src={forecastsImage} alt="Weather" style={{ width: '80px', height: '80px' }} />
+            <img src={forecastsImage} alt="ForecastData" style={{ width: '80px', height: '80px' }} />
           </ContainerImg>
         )}
     </StyledCard>
   );
 };
 
-export default WeatherCard;
+export default ForecastCard;
 

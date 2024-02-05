@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { Card } from "@mui/material";
-import weatherStore from "../../store/WeatherStore";
+import forecastStore from "../../store/ForecastsStore";
 
-const isSunny = weatherStore.itsSun;
+const isSunny = forecastStore.itsSun;
 
 const StyledCard = styled(Card)`
   width: 370px;

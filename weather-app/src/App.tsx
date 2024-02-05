@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import AppRoutes from './AppRouter';
-import weatherStore from './store/WeatherStore';
+import forecastStore from './store/ForecastsStore';
 
 function App() {
-  const isSunny = weatherStore.itsSun;
+  const isSunny = forecastStore.itsSun;
   const mainRef = useRef<HTMLDivElement>(null);
 
   useEffect(() =>{

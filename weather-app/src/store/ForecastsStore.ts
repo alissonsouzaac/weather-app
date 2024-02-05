@@ -1,7 +1,7 @@
 import { action, makeObservable, observable, runInAction, toJS } from "mobx";
 import { ForecastsData } from "../types/ForecastsData";
 
-class WeatherStore {
+class ForecastStore {
   forecasts: ForecastsData[] = [];
   forecast: ForecastsData | null = null;
   itsSun = true;
@@ -17,12 +17,12 @@ class WeatherStore {
     });
   }
 
-  addForecast(forecast: any) {
+  addForecast(forecast: ForecastsData) {
     this.forecasts.push(forecast);
   }
 
-  setForecast(weather: any) {
-      this.forecast = weather;
+  setForecast(forecast: ForecastsData) {
+      this.forecast = forecast;
       localStorage.setItem('forecasts', JSON.stringify(toJS(this.forecasts)));
   }
 
@@ -31,6 +31,6 @@ class WeatherStore {
   }
 }
 
-const weatherStore = new WeatherStore();
+const forecastStore = new ForecastStore();
 
-export default weatherStore;
+export default forecastStore;

@@ -1,4 +1,5 @@
 export interface ForecastsData {
+    cityName: string;
     latitude: number;
     longitude: number;
     generationtime_ms: number;

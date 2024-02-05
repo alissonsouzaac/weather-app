@@ -1,8 +1,10 @@
 import axios from 'axios';
-import weatherStore from '../store/WeatherStore';
 import { ForecastsData } from '../types/ForecastsData';
+import forecastStore from '../store/ForecastsStore';
 
 export async function ForecastService(latitude: string, longitude: string): Promise<ForecastsData | null> {
+  const apiKey = 'd4ffe50329f84ecaad2c5756c1ef7511' //process.env.REACT_APP_API_KEY;
+
   try {
     const weatherApi = axios.create({
       baseURL: process.env.REACT_APP_BASE_URL_WEATHER,
@@ -17,9 +19,16 @@ export async function ForecastService(latitude: string, longitude: string): Prom
         timezone: 'America/Sao_Paulo',
       },
     });
-     const forecastData: ForecastsData = apiResponse.data;
-     weatherStore.addForecast(apiResponse.data);
-     weatherStore.setForecast(apiResponse.data);
+
+    const apiURL = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=d4ffe50329f84ecaad2c5756c1ef7511`)
+
+    const cityName = apiURL.data.results[0].components._normalized_city;
+     const forecastData: ForecastsData = {
+      ...apiResponse.data,
+      cityName: cityName,
+    };
+     forecastStore.addForecast(forecastData);
+     forecastStore.setForecast(forecastData);
 
     return forecastData;
   } catch (error) {

@@ -15,6 +15,9 @@ const ForecastsDetails: React.FC<ForeCastsDetailsProps> = ({ forecastsData }) =>
       <Typography variant="h6" gutterBottom>
           Current forecasts Details
         </Typography>
+        <Typography variant="h4">
+            {forecastsData?.cityName}
+        </Typography>
         <Typography variant="body1">
           Latitude: {forecastsData.latitude}
         </Typography>
@@ -31,7 +34,7 @@ const ForecastsDetails: React.FC<ForeCastsDetailsProps> = ({ forecastsData }) =>
                 {forecastsData.current.temperature_2m} °C
               </TemperatureText>
               {forecastsData.current.rain !== undefined && (
-                <img src={forecastsImage} alt="forecasts" style={{ width: '60px', height: '60px' }} />
+                <img src={forecastsImage} alt="forecasts" style={{ width: '80px', height: '80px' }} />
               )}
             </TemperatureWrapper>
           </>
